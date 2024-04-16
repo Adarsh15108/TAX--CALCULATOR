@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tax Calculator</title>
+    <meta charset="UTF-8" />
+    <!-- Link to Bootstrap Icons library for icon usage -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Link to custom CSS file for styling -->
+    <link rel="stylesheet" type="text/css" href="b.css" />
+  </head>
+  <body>
+    <!-- Main container for the tax calculator application -->
+    <div id="app">
+      <!-- Input fields and labels for gross annual income, extra income, age group, and deductions -->
+      <label>
+        <p><span>Enter gross annual income</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Gross annual income is your total salary in a year before any deductions</span></span></p>
+        <input placeholder="Enter gross annual income" id="gross-income" />
+        <!-- Error icon and tooltip for gross annual income -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-gross-income"><span class="tooltiptext" id="error-text-gross-income">Please enter numbers only</span></i>
+      </label>
+      <label>
+        <p><span>Enter extra income</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Extra income is your income from other sources excluding gross income</span></span></p>
+        <input placeholder="Enter extra income from other sources" id="extra-income" />
+        <!-- Error icon and tooltip for extra income -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-extra-income"><span class="tooltiptext" id="error-text-extra-income">Please enter numbers only</span></i>
+      </label>
+      <label>
+        <p><span class="select-label">Enter age group</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Select your age from given age group options</span></span></p>
+        <div id="select-container">
+          <!-- Dropdown menu for selecting age group -->
+          <select id="age-group">
+            <option value="" disabled selected hidden>Select age group</option>
+            <option value="lessthan40">&lt; 40</option>
+            <option value="between40and60">&ge; 40 &amp; &lt; 60</option>
+            <option value="greaterthan60">&ge; 60</option>
+          </select>
+          <!-- Error icon and tooltip for age group -->
+          <div class="error-icon-container">
+            <i class="bi bi-exclamation-circle tooltip" id="error-icon-age-group"><span class="tooltiptext" id="error-text-age-group">Please enter numbers only</span></i>
+          </div>
+        </div>
+      </label>
+      <label>
+        <p class="deductions-label"><span>Enter total applicable deductions</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Enter total applicable deductions for gross and extra income</span></span></p>
+        <input placeholder="Add total applicable deductions" id="total-deductions" />
+        <!-- Error icon and tooltip for total deductions -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-total-deductions"><span class="tooltiptext" id="error-text-total-deductions">Please enter numbers only</span></i>
+      </label>
+      <!-- Button to submit the form for calculation -->
+      <button class="submit">Submit</button>
+      <!-- Modal for displaying the result -->
+      <div id="result">
+        <h2>Your overall income will be</h2>
+        <h3 id="overall-income">0</h3>
+        <h5 id="tax-text">after tax deductions</h5>
+        <!-- Button to close the result modal -->
+        <button class="close">Close</button>
+      </div>
+    </div>
+
+    <!-- Link to JavaScript file for functionality -->
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
