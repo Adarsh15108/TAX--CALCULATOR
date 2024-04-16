@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tax Calculator</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+		/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+/* Define color variables */
+:root {
+  --outline-color: #c6c0db; /* Color for outlines */
+  --label-color: #394852; /* Color for labels */
+  --input-border: #767676; /* Color for input borders */
+  --tooltiptext-background: #4c5d6b; /* Background color for tooltips */
+  --text-color: white; /* Color for text */
+  --button-bg: #6559f5; /* Background color for buttons */
+  --black: black; /* Black color */
+}
+
+/* Global reset */
+* {
+  box-sizing: border-box; /* Ensure box model consistency */
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styles */
+body {
+  font-family: "Roboto", sans-serif; /* Use Roboto font */
+  display: flex; /* Flex layout for centering */
+  height: 100svh; /* Set height to full viewport height */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main container styles */
+#app {
+  width: 360px; /* Set width */
+  border: 1px solid var(--outline-color); /* Border styles */
+  padding: 2rem; /* Add padding */
+  position: relative; /* Positioning */
+}
+
+/* Heading styles */
+#app h1 {
+  text-align: center; /* Center align text */
+  margin-bottom: 0.8rem; /* Add margin */
+}
+
+/* Label styles */
+label {
+  position: relative; /* Relative positioning for child elements */
+}
+
+label span {
+  color: var(--label-color); /* Label text color */
+  font-weight: 500; /* Set font weight */
+}
+
+label p {
+  display: flex; /* Flex layout for alignment */
+  align-items: center; /* Align items */
+  gap: 0.4rem; /* Spacing between elements */
+}
+
+/* Input and select styles */
+input,
+select {
+  width: 100%; /* Full width */
+  padding: 0.5rem; /* Padding for input elements */
+  margin: 0.2rem 0 0.7rem 0; /* Margin */
+}
+
+select {
+  width: 90%; /* Width for select element */
+  border-right: 0; /* Remove right border */
+}
+
+/* Error icon container styles */
+.error-icon-container {
+  border: 1px solid var(--input-border); /* Border styles */
+  border-left: 0; /* Remove left border */
+  width: 10%; /* Width */
+  height: 2.2rem; /* Height */
+  position: relative; /* Positioning */
+  top: 0; /* Top position */
+}
+
+/* Select container styles */
+#select-container {
+  display: flex; /* Flex layout */
+}
+
+#select-container select {
+  margin: 0; /* Remove margin */
+}
+
+/* Focus styles */
+#age-group:focus {
+  outline: none; /* Remove outline on focus */
+}
+
+#select-container:focus-within {
+  outline: 2px solid var(--black); /* Add outline on focus */
+}
+
+/* Label styles for select */
+.select-label {
+  margin-bottom: 0.2rem; /* Bottom margin */
+}
+
+/* Label styles for deductions */
+.deductions-label {
+  margin-top: 0.7rem; /* Top margin */
+}
+
+/* Error icon styles */
+label .bi-exclamation-circle {
+  position: absolute; /* Absolute positioning */
+  cursor: pointer; /* Set cursor */
+  display: none; /* Initially hidden */
+}
+
+/* Error icon position for gross income */
+label #error-icon-gross-income {
+  right: 4%; /* Right position */
+  top: 65%; /* Top position */
+}
+
+/* Error icon position for extra income */
+#error-icon-extra-income {
+  right: 11px; /* Right position */
+  top: 80%; /* Top position */
+}
+
+/* Error icon position for age group */
+#error-icon-age-group {
+  right: 11px; /* Right position */
+  top: 25%; /* Top position */
+}
+
+/* Error icon position for total deductions */
+#error-icon-total-deductions {
+  top: 33%; /* Top position */
+  right: -282px; /* Right position */
+}
+
+/* Question mark icon styles */
+label .bi-question-circle {
+  cursor: pointer; /* Set cursor */
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative; /* Relative positioning */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden; /* Initially hidden */
+  width: 125px; /* Width */
+  background-color: var(--tooltiptext-background); /* Background color */
+  color: var(--text-color); /* Text color */
+  border-radius: 6px; /* Border radius */
+  padding: 5px 0; /* Padding */
+  position: absolute; /* Absolute positioning */
+  z-index: 1; /* Higher z-index */
+  bottom: 140%; /* Position */
+  left: 50%; /* Position */
+  margin-left: -15px; /* Position */
+  opacity: 0; /* Initial opacity */
+  transition: opacity 0.3s; /* Transition effect */
+  padding: 10px; /* Padding */
+  font-size: 12px; /* Font size */
+}
+
+.tooltip .tooltiptext::after {
+  content: ""; /* Content */
+  position: absolute; /* Absolute positioning */
+  top: 100%; /* Position */
+  left: 10%; /* Position */
+  margin-left: -5px; /* Position */
+  border-width: 5px; /* Border width */
+  border-style: solid; /* Border style */
+  border-color: var(--tooltiptext-background) transparent transparent transparent; /* Border color */
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible; /* Show tooltip on hover */
+  opacity: 1; /* Change opacity */
+}
+
+/* Button styles */
+.submit {
+  width: 100%; /* Full width */
+}
+
+.close {
+  width: 18%; /* Width */
+}
+
+.submit,
+.close {
+  background: var(--button-bg); /* Background color */
+  border: none; /* No border */
+  color: var(--text-color); /* Text color */
+  padding: 0.5rem; /* Padding */
+  border-radius: 5px; /* Border radius */
+  margin-top: 1.5rem; /* Top margin */
+  cursor: pointer; /* Set cursor */
+}
+
+/* Heading styles for result modal */
+h2 {
+  margin-bottom: 0.2rem; /* Bottom margin */
+}
+
+/* Result modal styles */
+#result {
+  z-index: 2; /* Z-index */
+  position: absolute; /* Absolute positioning */
+  top: 7%; /* Top position */
+  left: -30px; /* Left position */
+  background: var(--text-color); /* Background color */
+  width: 420px; /* Width */
+  border: 1px solid var(--outline-color); /* Border styles */
+  padding: 1.5rem; /* Padding */
+  height: 380px; /* Height */
+  display: flex; /* Flex layout */
+  align-items: center; /* Align items */
+  justify-content: center; /* Justify content */
+  flex-direction: column; /* Flex direction */
+  color: var(--label-color); /* Text color */
+  display: none; /* Initially hidden */
+}
+
+    </style>
+  </head>
+  <body>
+    <!-- Main container for the tax calculator application -->
+    <div id="app">
+      <!-- Input fields and labels for gross annual income, extra income, age group, and deductions -->
+      <label>
+        <p><span>Enter gross annual income</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Gross annual income is your total salary in a year before any deductions</span></span></p>
+        <input placeholder="Enter gross annual income" id="gross-income" />
+        <!-- Error icon and tooltip for gross annual income -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-gross-income"><span class="tooltiptext" id="error-text-gross-income">Please enter numbers only</span></i>
+      </label>
+      <label>
+        <p><span>Enter extra income</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Extra income is your income from other sources excluding gross income</span></span></p>
+        <input placeholder="Enter extra income from other sources" id="extra-income" />
+        <!-- Error icon and tooltip for extra income -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-extra-income"><span class="tooltiptext" id="error-text-extra-income">Please enter numbers only</span></i>
+      </label>
+      <label>
+        <p><span class="select-label">Enter age group</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Select your age from given age group options</span></span></p>
+        <div id="select-container">
+          <!-- Dropdown menu for selecting age group -->
+          <select id="age-group">
+            <option value="" disabled selected hidden>Select age group</option>
+            <option value="lessthan40">&lt; 40</option>
+            <option value="between40and60">&ge; 40 &amp; &lt; 60</option>
+            <option value="greaterthan60">&ge; 60</option>
+          </select>
+          <!-- Error icon and tooltip for age group -->
+          <div class="error-icon-container">
+            <i class="bi bi-exclamation-circle tooltip" id="error-icon-age-group"><span class="tooltiptext" id="error-text-age-group">Please enter numbers only</span></i>
+          </div>
+        </div>
+      </label>
+      <label>
+        <p class="deductions-label"><span>Enter total applicable deductions</span><span class="bi bi-question-circle tooltip"><span class="tooltiptext">Enter total applicable deductions for gross and extra income</span></span></p>
+        <input placeholder="Add total applicable deductions" id="total-deductions" />
+        <!-- Error icon and tooltip for total deductions -->
+        <i class="bi bi-exclamation-circle tooltip" id="error-icon-total-deductions"><span class="tooltiptext" id="error-text-total-deductions">Please enter numbers only</span></i>
+      </label>
+      <!-- Button to submit the form for calculation -->
+      <button class="submit">Submit</button>
+      <!-- Modal for displaying the result -->
+      <div id="result">
+        <h2>Your overall income will be</h2>
+        <h3 id="overall-income">0</h3>
+        <h5 id="tax-text">after tax deductions</h5>
+        <!-- Button to close the result modal -->
+        <button class="close">Close</button>
+      </div>
+    </div>
+
+    <script>
+		// Get all input and select elements
+const inputs = document.querySelectorAll("input, select");
+// Get error icons
+const errorIcons = document.querySelectorAll(".bi-exclamation-circle");
+// Get error text messages
+const errorTexts = document.querySelectorAll(".bi-exclamation-circle .tooltiptext");
+
+// Get age group input
+const ageGroup = document.querySelector("#age-group");
+
+// Get overall income element
+const overallIncome = document.querySelector("#overall-income");
+// Get result modal
+const resultDiv = document.querySelector("#result");
+// Get close button
+const closeButton = document.querySelector(".close");
+// Get submit button
+const submitButton = document.querySelector(".submit");
+// Get tax text
+const taxText = document.querySelector("#tax-text");
+
+// Set initial overall income value
+let overAllIncome = 0;
+
+// Define income limit
+const incomeLimit = 800000;
+
+// Function to check input validity and show error messages
+const inputChecker = (input, errorIcon, errorText) => {
+  if (input.value.length == 0) {
+    errorIcon.style.display = "flex";
+    errorText.innerText = "This input field is mandatory";
+  } else if (isNaN(input.value) && input != ageGroup) {
+    errorIcon.style.display = "flex";
+    errorText.innerText = "Please enter numbers only";
+  } else if (Number(input.value) < 0) {
+    errorIcon.style.display = "flex";
+    errorText.innerText = "Please enter non-negative numbers only";
+  } else {
+    errorIcon.style.display = "none";
+  }
+};
+
+// Function to check if all inputs are valid upon submission
+const submitChecker = () => {
+  let checkedInputs = Array.from(inputs).filter((inp) =>
+    inp === ageGroup ? inp.value.length > 0 : inp.value.length > 0 && !isNaN(inp.value) && inp.value >= 0,
+  );
+
+  return checkedInputs.length === inputs.length;
+};
+
+// Function to calculate overall income after tax
+const taxCalculator = () => {
+  let incomeAfterDeductions =
+    Number(inputs[0].value) + Number(inputs[1].value) - Number(inputs[3].value);
+
+  overAllIncome =
+    incomeAfterDeductions <= incomeLimit
+      ? Number(inputs[0].value) + Number(inputs[1].value)
+      : taxedIncomeCalculator(incomeAfterDeductions);
+  overallIncome.innerText = "₹ " + overAllIncome;
+  taxText.innerText =
+    incomeAfterDeductions <= incomeLimit
+      ? "no tax applicable"
+      : "after tax deductions";
+};
+
+// Function to calculate taxed income
+const taxedIncomeCalculator = (incomeAfterDeductions) => {
+  let taxableIncome = incomeAfterDeductions - incomeLimit;
+  let taxAmount =
+    ageGroup.value === "lessthan40"
+      ? 0.3 * taxableIncome
+      : ageGroup.value === "between40and60"
+        ? 0.4 * taxableIncome
+        : 0.1 * taxableIncome;
+  return incomeAfterDeductions - taxAmount;
+};
+
+// Event listener for closing the result modal
+closeButton.addEventListener("click", () => {
+  resultDiv.style.display = "none";
+});
+
+// Event listeners for input changes and focuses to validate input fields
+inputs.forEach((input, index) => {
+  input.addEventListener("change", () => {
+    inputChecker(input, errorIcons[index], errorTexts[index]);
+  });
+  input.addEventListener("focus", () => {
+    inputChecker(input, errorIcons[index], errorTexts[index]);
+  });
+});
+
+// Event listener for submitting the form
+submitButton.addEventListener("click", () => {
+  if (submitChecker()) {
+    taxCalculator();
+    resultDiv.style.display = "flex";
+    inputs.forEach((input) => (input.value = ""));
+  } else {
+    inputs.forEach((input, index) => {
+      inputChecker(input, errorIcons[index], errorTexts[index]);
+    });
+  }
+});
+
+    </script>
+  </body>
+</html>
+
