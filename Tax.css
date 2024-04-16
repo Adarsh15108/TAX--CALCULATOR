@@ -1,0 +1,229 @@
+/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+/* Define color variables */
+:root {
+  --outline-color: #c6c0db; /* Color for outlines */
+  --label-color: #394852; /* Color for labels */
+  --input-border: #767676; /* Color for input borders */
+  --tooltiptext-background: #4c5d6b; /* Background color for tooltips */
+  --text-color: white; /* Color for text */
+  --button-bg: #6559f5; /* Background color for buttons */
+  --black: black; /* Black color */
+}
+
+/* Global reset */
+* {
+  box-sizing: border-box; /* Ensure box model consistency */
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styles */
+body {
+  font-family: "Roboto", sans-serif; /* Use Roboto font */
+  display: flex; /* Flex layout for centering */
+  height: 100svh; /* Set height to full viewport height */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main container styles */
+#app {
+  width: 360px; /* Set width */
+  border: 1px solid var(--outline-color); /* Border styles */
+  padding: 2rem; /* Add padding */
+  position: relative; /* Positioning */
+}
+
+/* Heading styles */
+#app h1 {
+  text-align: center; /* Center align text */
+  margin-bottom: 0.8rem; /* Add margin */
+}
+
+/* Label styles */
+label {
+  position: relative; /* Relative positioning for child elements */
+}
+
+label span {
+  color: var(--label-color); /* Label text color */
+  font-weight: 500; /* Set font weight */
+}
+
+label p {
+  display: flex; /* Flex layout for alignment */
+  align-items: center; /* Align items */
+  gap: 0.4rem; /* Spacing between elements */
+}
+
+/* Input and select styles */
+input,
+select {
+  width: 100%; /* Full width */
+  padding: 0.5rem; /* Padding for input elements */
+  margin: 0.2rem 0 0.7rem 0; /* Margin */
+}
+
+select {
+  width: 90%; /* Width for select element */
+  border-right: 0; /* Remove right border */
+}
+
+/* Error icon container styles */
+.error-icon-container {
+  border: 1px solid var(--input-border); /* Border styles */
+  border-left: 0; /* Remove left border */
+  width: 10%; /* Width */
+  height: 2.2rem; /* Height */
+  position: relative; /* Positioning */
+  top: 0; /* Top position */
+}
+
+/* Select container styles */
+#select-container {
+  display: flex; /* Flex layout */
+}
+
+#select-container select {
+  margin: 0; /* Remove margin */
+}
+
+/* Focus styles */
+#age-group:focus {
+  outline: none; /* Remove outline on focus */
+}
+
+#select-container:focus-within {
+  outline: 2px solid var(--black); /* Add outline on focus */
+}
+
+/* Label styles for select */
+.select-label {
+  margin-bottom: 0.2rem; /* Bottom margin */
+}
+
+/* Label styles for deductions */
+.deductions-label {
+  margin-top: 0.7rem; /* Top margin */
+}
+
+/* Error icon styles */
+label .bi-exclamation-circle {
+  position: absolute; /* Absolute positioning */
+  cursor: pointer; /* Set cursor */
+  display: none; /* Initially hidden */
+}
+
+/* Error icon position for gross income */
+label #error-icon-gross-income {
+  right: 4%; /* Right position */
+  top: 65%; /* Top position */
+}
+
+/* Error icon position for extra income */
+#error-icon-extra-income {
+  right: 11px; /* Right position */
+  top: 80%; /* Top position */
+}
+
+/* Error icon position for age group */
+#error-icon-age-group {
+  right: 11px; /* Right position */
+  top: 25%; /* Top position */
+}
+
+/* Error icon position for total deductions */
+#error-icon-total-deductions {
+  top: 33%; /* Top position */
+  right: -282px; /* Right position */
+}
+
+/* Question mark icon styles */
+label .bi-question-circle {
+  cursor: pointer; /* Set cursor */
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative; /* Relative positioning */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden; /* Initially hidden */
+  width: 125px; /* Width */
+  background-color: var(--tooltiptext-background); /* Background color */
+  color: var(--text-color); /* Text color */
+  border-radius: 6px; /* Border radius */
+  padding: 5px 0; /* Padding */
+  position: absolute; /* Absolute positioning */
+  z-index: 1; /* Higher z-index */
+  bottom: 140%; /* Position */
+  left: 50%; /* Position */
+  margin-left: -15px; /* Position */
+  opacity: 0; /* Initial opacity */
+  transition: opacity 0.3s; /* Transition effect */
+  padding: 10px; /* Padding */
+  font-size: 12px; /* Font size */
+}
+
+.tooltip .tooltiptext::after {
+  content: ""; /* Content */
+  position: absolute; /* Absolute positioning */
+  top: 100%; /* Position */
+  left: 10%; /* Position */
+  margin-left: -5px; /* Position */
+  border-width: 5px; /* Border width */
+  border-style: solid; /* Border style */
+  border-color: var(--tooltiptext-background) transparent transparent transparent; /* Border color */
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible; /* Show tooltip on hover */
+  opacity: 1; /* Change opacity */
+}
+
+/* Button styles */
+.submit {
+  width: 100%; /* Full width */
+}
+
+.close {
+  width: 18%; /* Width */
+}
+
+.submit,
+.close {
+  background: var(--button-bg); /* Background color */
+  border: none; /* No border */
+  color: var(--text-color); /* Text color */
+  padding: 0.5rem; /* Padding */
+  border-radius: 5px; /* Border radius */
+  margin-top: 1.5rem; /* Top margin */
+  cursor: pointer; /* Set cursor */
+}
+
+/* Heading styles for result modal */
+h2 {
+  margin-bottom: 0.2rem; /* Bottom margin */
+}
+
+/* Result modal styles */
+#result {
+  z-index: 2; /* Z-index */
+  position: absolute; /* Absolute positioning */
+  top: 7%; /* Top position */
+  left: -30px; /* Left position */
+  background: var(--text-color); /* Background color */
+  width: 420px; /* Width */
+  border: 1px solid var(--outline-color); /* Border styles */
+  padding: 1.5rem; /* Padding */
+  height: 380px; /* Height */
+  display: flex; /* Flex layout */
+  align-items: center; /* Align items */
+  justify-content: center; /* Justify content */
+  flex-direction: column; /* Flex direction */
+  color: var(--label-color); /* Text color */
+  display: none; /* Initially hidden */
+}
